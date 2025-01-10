@@ -51,7 +51,7 @@ bool InitializeLib() {
 }
 
 void ClickPos(int2 pos) {
-    int x = int(float(pos.x) / 2560. * screenWidth);
+    int x = int(float(pos.x) / 3340. * screenWidth);
     int y = int(float(pos.y) / 1440. * screenHeight);
     clickFun.Call(true, x, y);
 }
@@ -148,6 +148,8 @@ void ConvertBlockToItemCoroutine(ref@ refHandle) {
 void ConvertBlockToItem(BlockExportData@ blockExportData, bool moveMouseManually = false) {
     CGameCtnBlockInfo@ block = blockExportData.block;
     string desiredItemLocation = blockExportData.blockFileExportPath;
+
+    print("MOO MOO MOO: " + blockExportData.blockItemPath);
 
     // ThrowBlockException("Failed to click block");
     

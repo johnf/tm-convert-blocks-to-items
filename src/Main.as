@@ -15,8 +15,29 @@ void UpdateAllBlocks() {
     if(!initLib) return;
 
     blocks = FindAllBlocksInEditorInventory();    
+
+    array<string> blacklistNames = ParseBlackListString(blacklistNamesStr);
+    for(uint i = 0; i < blocks.Length; i++) {
+        string blockName = blocks[i].block.Name;
+                print("MOO1: " + blockName);
+
+        for(uint j = 0; j < blacklistNames.Length; j++) {
+            string blacklistName = blacklistNames[j];
+                print("MOO1: " + blacklistName);
+
+
+            bool match = Regex::Contains(blockName, blacklistName + ".*Item.Gbx");
+
+            if (match) {
+                print("Blacklisted: " + blockName);
+                blocks[i].blacklisted = true;
+            }
+        }
+    }
+
     blockExportTree = BlockExportTree(blocks);
     blockExportTree.PropagateBlacklist(blacklistStr);
+
 }
 
 void GoToEditor() {
@@ -85,7 +106,8 @@ void RenderInterface() {
 }
 
 bool windowOpen = true;
-string blacklistStr = "water, Nadeo/RoadIce/Racing, StageDiagIn.Item.Gbx, StageCurve1Out.Item.Gbx, StageCurve2Out.Item.Gbx, StageCurve3Out.Item.Gbx, StageCurve1In.Item.Gbx, StageCurve2In.Item.Gbx, StageCurve3In.Item.Gbx";
+string blacklistStr = "water, Nadeo/RoadIce/Racing, StageDiagIn.Item.Gbx, StageCurve1Out.Item.Gbx, StageCurve2Out.Item.Gbx, StageCurve3Out.Item.Gbx, StageCurve1In.Item.Gbx, StageCurve2In.Item.Gbx, StageCurve3In.Item.Gbx, DecoPlatform";
+string blacklistNamesStr = "DecoPlatform";
 bool blacklistChanged = false;
 array<BlockExportData@> blocks;
 BlockExportTree blockExportTree;
